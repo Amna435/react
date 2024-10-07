@@ -1,28 +1,36 @@
 import React from 'react'
-
-function TodoList(props) {
+import { Box, Text, IconButton } from '@chakra-ui/react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+function TodoList({ listitem, index, deleteItem, editItem })  {
 
   return (
-    <li className="list-item">
-      <p>{props.listitem}</p>
-      <div className="button-container">
-      <button className="edit-btn" ></button>
-        <span className='icons'>
-        <i class="fa-solid fa-pen-to-square"
-         onClick={e =>{
-            props.editItem(props.index)
-        }}></i>
-        </span>
-        <button className="delete-btn"></button>
-        <span className='icons'>
-        <i class="fa-solid fa-trash"
-        onClick={e =>{
-            props.deleteItem(props.index)
-        }}></i>
-        </span>
-        </div>
-    </li>
-  )
+    <Box 
+    d="flex" 
+    textColor="black"
+    alignItems="center" 
+    justifyContent="space-between" 
+    p={4} 
+    bg="green.100" 
+    borderRadius="md" 
+    mb={2}
+>
+<Text>{listitem}</Text>
+            <Box>
+                <IconButton 
+                    icon={<EditIcon />} 
+                    bg="green.500" 
+                    onClick={() => editItem(index)}
+                    mr={2}
+                />
+                <IconButton 
+                    icon={<DeleteIcon />} 
+                    bg="green.500" 
+                    onClick={() => deleteItem(index)}
+                />
+            </Box>
+        </Box>
+    );
 }
+
 
 export default TodoList

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-
+import { Input, Button, Box } from '@chakra-ui/react';
 function TodoInput(props) {
     const [inputText,setInputText ] = useState('')
     
@@ -16,23 +16,27 @@ function TodoInput(props) {
         }
       };
      return (
-    <div className="input-container">
-        <input 
+    <Box className="input-container" mb={4}>
+        <Input 
         type="text" 
+        textColor="black"
         className="input-box-todo"
+        size="lg"
+        mb={2}
+        bg="green.100"
         placeholder="Enter your Todo"
         value={inputText}
         onChange={handleInputChange}
         />
-        <button className="add-btn"
+        <Button className="add-btn"  bg="green.500"
          onClick={() => {
         props.addList(inputText);
         setInputText('');
          props.setEditText('');
   }}
           >
-        +</button>
-    </div>
+        +</Button>
+    </Box>
   )
 }
 
