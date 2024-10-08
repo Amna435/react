@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
+import { motion } from 'framer-motion';
 import TodoInput from './components/TodoInput';
 import TodoList from './components/TodoList';
 import { Button,Text,Box, Heading, Divider, useColorMode } from '@chakra-ui/react';
+
+const MotionBox = motion(Box);
+const MotionButton = motion(Button);
+
 function App() {
   const [listTodo,setListToDo] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
@@ -32,15 +37,27 @@ function App() {
   const deleteListItem = (key) =>{
     let newListTodo =[...listTodo];
     newListTodo.splice(key,1)
-    setListToDo([...newListTodo])
-  }
+    setListToDo([...newListTodo]);
+  };
   return (
-    <Box className="main-container"  bg={colorMode === 'light' ? 'gray.100' : 'gray.800'} minH="100vh" p={8}>
+    <MotionBox 
+    className="main-container" 
+     bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
+     minH="100vh"
+     p={8}  
+     initial={{ opacity: 0 }}
+     animate={{ opacity: 1 }}
+     transition={{ duration: 0.5 }}
+     >
       <Box className="center-container"  maxW="md" mx="auto">
         
-        <Button onClick={toggleColorMode}>
+        <MotionButton 
+        onClick={toggleColorMode}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+         >
           {colorMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-        </Button>
+        </MotionButton>
 
         <TodoInput
           addList={addList}
@@ -50,17 +67,29 @@ function App() {
           />
             <Text color="black" fontSize="2xl" mt={4}>
         </Text>
-        <Heading as="h1" size="xl" mb={4} textAlign="center">Todo List </Heading>
+        <Heading 
+        as="h1" 
+        size="xl" 
+        mb={4} 
+        textAlign="center"
+        >Todo List </Heading>
         <Divider mb={4} />
-       {listTodo.map((listItem,i)=>{
-        return(
+        
+       {listTodo.map((listItem,i)=>(
+         <MotionBox 
+         key={i} 
+         initial={{ opacity: 0, y: 20 }} 
+         animate={{ opacity: 1, y: 0 }}
+         transition={{ duration: 0.5, delay: i * 0.1 }}
+       >
           <TodoList key={i} index={i} listitem={listItem} deleteItem={deleteListItem} editItem={editListItem} />
-
-        );
-       })}
-      </Box>
-    </Box>
+      </MotionBox>
+       ))}
+       </Box>
+    </MotionBox>
   );
 }
+
+
 
 export default App;
